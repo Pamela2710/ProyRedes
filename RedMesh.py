@@ -107,16 +107,16 @@ class RedMesh:
         for vecino in nodo_actual.vecinos:
             print(f"Enviando datos a {direccion_ip_destino} a través del vecino {vecino.direccion_ip}")
 
-red = RedMesh()
-red.agregar_nodo("192.168.0.1")
-red.agregar_nodo("192.168.0.2")
-red.agregar_nodo("192.168.0.3")
-
-#red.eliminar_nodo("192.168.0.3")
-
-red.nodos[0].vecinos = [red.nodos[1], red.nodos[2]]
-red.nodos[1].vecinos = [red.nodos[0], red.nodos[2]]
-red.nodos[2].vecinos = [red.nodos[0], red.nodos[1]]
-
-red.enrutamiento("192.168.0.1", "192.168.0.2", "Hola, nodo 2")
-red.enrutamiento("192.168.0.1", "192.168.0.3", "Hola, nodo 3")
+# red = RedMesh()
+# red.agregar_nodo("192.168.0.1")
+# red.agregar_nodo("192.168.0.2")
+# red.agregar_nodo("192.168.0.3")
+#
+# #red.eliminar_nodo("192.168.0.3")
+#
+# red.nodos[0].vecinos = [red.nodos[1], red.nodos[2]]
+# red.nodos[1].vecinos = [red.nodos[0], red.nodos[2]]
+# red.nodos[2].vecinos = [red.nodos[0], red.nodos[1]]
+#
+# red.enrutamiento("192.168.0.1", "192.168.0.2", "Hola, nodo 2")
+# red.enrutamiento("192.168.0.1", "192.168.0.3", "Hola, nodo 3")
