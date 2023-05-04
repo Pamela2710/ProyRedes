@@ -3,9 +3,9 @@ import threading
 import time
 import uuid
 
-def handle_message(msg, sender_id):
+def handle_message(msg, sender):
     clean_msg = extract_message(msg)
-    print(f"Received message from {sender_id}: {clean_msg}")
+    print(f"Received message from {sender}: {clean_msg}")
 
 def extract_message(input_string):
     start_index = input_string.index("(b'") + 3
@@ -16,20 +16,20 @@ def extract_message(input_string):
 def show_connected_devices(node):
     print("Connected devices:")
     for peer in node.routing_table:
-        print(f"ID: {peer.id}, Address: {peer.addr}")
+        print(f"ID: {peer.sender}, Address: {peer.addr}")
 
 def main():
     # Create a new mesh node with a specified port
     node = py2p.MeshSocket('0.0.0.0', 5678)
-    
+
     node.timeout = 10
     node.max_connections = 2
 
     # unique ID
-    node.id = str(uuid.uuid4())[:8]
+    node.sender = str(uuid.uuid4())[:8]
 
     print(f"This node's address: {node.out_addr}")
-    print(f"This node's ID: {node.id}")
+    print(f"This node's ID: {node.sender}")
 
     # Connect to the bootstrap node if you know its address
     bootstrap_address = input("Enter the bootstrap node's address (IP:Port) or leave empty: ")
@@ -41,13 +41,12 @@ def main():
     def message_handler():
         while True:
             received = node.recv()
+
             if received:
                 msg = received.packets
                 sender = received.sender
-                
-                handle_message(msg, sender.id)
+                handle_message(msg, sender)
             time.sleep(0.1)
-
 
     message_thread = threading.Thread(target=message_handler)
     message_thread.daemon = True
