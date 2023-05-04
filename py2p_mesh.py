@@ -1,28 +1,52 @@
-from mesh_network import MeshNetwork
+import py2p
 import threading
 import time
 
-def handle_message(src, msg):
-    print(f"Received message from {src}: {msg}")
+def handle_message(msg):
+    clean_msg = extract_message(msg)
+    print(f"Received message: {clean_msg}")
+
+def extract_message(input_string):
+    start_index = input_string.index("(b'") + 3
+    end_index = input_string.index("',)")
+    message = input_string[start_index:end_index]
+    return message
 
 def main():
-    mesh = MeshNetwork("127.0.0.1", 5555)
-    mesh.on_receive(handle_message)
+    # Create a new mesh node with a specified port
+    node = py2p.MeshSocket('0.0.0.0', 5678)
 
-    # Start the mesh network node
-    mesh_thread = threading.Thread(target=mesh.run)
-    mesh_thread.start()
+    # Connect to the bootstrap node if you know its address
+    bootstrap_address = input("Enter the bootstrap node's address (IP:Port) or leave empty: ")
+    if bootstrap_address:
+        ip, port = bootstrap_address.split(':')
+        node.connect(ip, int(port))
 
-    # Connect the node to another node in the mesh network
-    other_node = ("127.0.0.1", 5556)
-    mesh.connect_node(other_node)
+    print(f"This node's address: {node.out_addr}")
 
-    # Send messages to other nodes
+    # Start a thread to handle incoming messages
+    def message_handler():
+        while True:
+            msg, sender = node.recv()
+            if msg:
+                handle_message(msg)
+            time.sleep(0.1)
+
+    message_thread = threading.Thread(target=message_handler)
+    message_thread.daemon = True
+    message_thread.start()
+
+    # Send messages to the other nodes
     while True:
-        message = input("Enter message to send: ")
-        mesh.broadcast(message)
+        message = input("Enter message to send, 'exit' to quit, or 'disconnect' to disconnect: ")
 
-        time.sleep(1)
+        if message == 'exit':
+            break
+        elif message == 'disconnect':
+            node.disconnect()
+            break
+        else:
+            node.send(bytes(message, 'utf-8'))
 
 if __name__ == "__main__":
     main()
