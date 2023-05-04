@@ -4,8 +4,8 @@ import time
 import uuid
 
 def handle_message(msg, sender):
-    clean_msg = extract_message(msg)
-    print(f"Received message from {clean_msg}: {clean_msg}")
+    #clean_msg = extract_message(msg)
+    print(f"Received message from {sender}: {msg}")
 
 def extract_message(input_string):
     start_index = input_string.index("(b'") + 3
@@ -16,7 +16,7 @@ def extract_message(input_string):
 def show_connected_devices(node):
     print("Connected devices:")
     for peer in node.routing_table:
-        print(f"ID: {peer.sender}, Address: {peer.addr}")
+        print(f"ID: {peer.recv.sender}, Address: {peer.addr}")
         
 def message_to_string(message_obj):
     return str(message_obj.packets)
