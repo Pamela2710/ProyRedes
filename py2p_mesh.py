@@ -42,7 +42,7 @@ def main():
         while True:
             received = node.recv()
             if received:
-                msg = mrecived.packets
+                msg = received.packets
                 sender = received.sender
                 
                 handle_message(msg, sender.id)
