@@ -4,15 +4,9 @@ import time
 import uuid
 
 def handle_message(msg, sender):
-    clean_msg = extract_message(msg)
+    clean_msg = msg.packets
     clean_sender = sender_to_string(sender)
     print(f"Received message from {sender}: {clean_msg}")
-
-def extract_message(input_string):
-    start_index = input_string.index("(b'") + 3
-    end_index = input_string.index("',)")
-    message = input_string[start_index:end_index]
-    return message
     
 def sender_to_string(message_obj):
     return str(message_obj.packets)[:8]
@@ -51,9 +45,8 @@ def main():
 
             if received:
                 msg = received
-                string_msg = message_to_string(msg)  # Convert the Message object to a string
                 sender = received.sender
-                handle_message(string_msg, sender)
+                handle_message(msg, sender)
             time.sleep(0.1)
 
     message_thread = threading.Thread(target=message_handler)
