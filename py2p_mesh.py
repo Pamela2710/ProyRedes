@@ -62,7 +62,7 @@ def main():
 
     # Reconnection mechanism
     def reconnection_handler():
-       while !(node.routing_table > 0):
+       while (node.routing_table == 0):
            if not node.routing_table:
                print("No connections. Attempting to reconnect...")
                for ip, port in bootstraps:
@@ -83,10 +83,10 @@ def main():
         message = input("Enter message to send, 'exit' or 'show': ")
 
         if message == 'exit':
-            node.disconnect(node.id)
+            node.disconnect(node)
             break
         elif message == 'disconnect':
-            node.disconnect(node.id)
+            node.disconnect(node)
             break
         elif message == 'show':
             show_connected_devices(node)
