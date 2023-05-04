@@ -1,5 +1,7 @@
 ## Proyecto Redes 1
 
+Andrés Martínez (00213046), Máximo Pinta (00211312), Pamela Pupiales (00213871), Mateo Ruiz (00212195), Diego Reinoso (00214020)
+
 Este proyecto implementa una red mesh utilizando la biblioteca **py2p**. En esta red se busca que cada nodo se comunique directamente con otros nodos cercanos en lugar de tener que entablar comunicacion a traves de un servidor central.
 
 Al iniciar el programa, crea un nodo mesh en el puerto 5678. Luego se solicita ingresar la dirección (IP:Puerto) del nodo bootstrap. Este es el nodo que va a servir como nodo de arranque. Si se deja en blanco el programa asume que la computadora es el nodo bootstrap y recupera la direccion ip automaticamente. Caso contrario el programa intentara conectarse con el nodo bootstrap.
