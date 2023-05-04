@@ -4,8 +4,8 @@ import time
 import uuid
 
 def handle_message(msg, sender):
-    clean_msg = extract_message(msg.to_string())
-    print(f"Received message from {msg}: {clean_msg}")
+    clean_msg = extract_message(msg)
+    print(f"Received message from {clean_msg}: {clean_msg}")
 
 def extract_message(input_string):
     start_index = input_string.index("(b'") + 3
