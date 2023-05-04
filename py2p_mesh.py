@@ -61,22 +61,22 @@ def main():
 
 
     # Reconnection mechanism
-       def reconnection_handler():
-           while True:
-               if not node.routing_table:
-                   print("No connections. Attempting to reconnect...")
-                   for ip, port in bootstraps:
-                       try:
-                           node.connect(ip, int(port))
-                           print("Reconnected to the bootstrap node.")
-                           break
-                       except Exception as e:
-                           print(f"Failed to reconnect: {e}")
-                           time.sleep(5)
+    def reconnection_handler():
+       while True:
+           if not node.routing_table:
+               print("No connections. Attempting to reconnect...")
+               for ip, port in bootstraps:
+                   try:
+                       node.connect(ip, int(port))
+                       print("Reconnected to the bootstrap node.")
+                       break
+                   except Exception as e:
+                       print(f"Failed to reconnect: {e}")
+                       time.sleep(5)
 
-       reconnection_thread = threading.Thread(target=reconnection_handler)
-       reconnection_thread.daemon = True
-       reconnection_thread.start()
+    reconnection_thread = threading.Thread(target=reconnection_handler)
+    reconnection_thread.daemon = True
+    reconnection_thread.start()
 
     # Send messages to the other nodes
     while True:
