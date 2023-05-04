@@ -32,11 +32,17 @@ def main():
     print(f"This node's address: {node.out_addr}")
     print(f"This node's ID: {node.sender}")
 
-    # Connect to the bootstrap node if you know its address
+    
+    
+    # List to store the bootstrap nodes
+    bootstraps = []
+        
     bootstrap_address = input("Enter the bootstrap node's address (IP:Port) or leave empty: ")
     if bootstrap_address:
         ip, port = bootstrap_address.split(':')
         node.connect(ip, int(port))
+        bootstraps.append((ip, int(port)))
+        
 
     # Start a thread to handle incoming messages
     def message_handler():
@@ -52,25 +58,25 @@ def main():
     message_thread = threading.Thread(target=message_handler)
     message_thread.daemon = True
     message_thread.start()
-    
-    
-    # Reconnection mechanism
-    def reconnection_handler():
-        while True:
-            if not node.routing_table:
-                print("No connections. Attempting to reconnect...")
-                for ip, port in node.bootstraps:
-                    try:
-                        node.connect(ip, int(port))
-                        print("Reconnected to the bootstrap node.")
-                        break
-                    except Exception as e:
-                        print(f"Failed to reconnect: {e}")
-                        time.sleep(5)
 
-    reconnection_thread = threading.Thread(target=reconnection_handler)
-    reconnection_thread.daemon = True
-    reconnection_thread.start()
+
+    # Reconnection mechanism
+       def reconnection_handler():
+           while True:
+               if not node.routing_table:
+                   print("No connections. Attempting to reconnect...")
+                   for ip, port in bootstraps:
+                       try:
+                           node.connect(ip, int(port))
+                           print("Reconnected to the bootstrap node.")
+                           break
+                       except Exception as e:
+                           print(f"Failed to reconnect: {e}")
+                           time.sleep(5)
+
+       reconnection_thread = threading.Thread(target=reconnection_handler)
+       reconnection_thread.daemon = True
+       reconnection_thread.start()
 
     # Send messages to the other nodes
     while True:
