@@ -4,9 +4,9 @@ import time
 import uuid
 
 def handle_message(msg, sender):
-    clean_msg = (msg.packets)[6:-2]
-    clean_sender = sender[0:10]
-    print(f"Received message from {clean_sender}: {clean_msg}")
+    clean_msg = (msg.packets)[4:-2]
+    clean_sender = sender[2:10]
+    print(f"\nReceived message from {clean_sender}: {clean_msg}")
     
 def sender_to_string(message_obj):
     return str(message_obj)[:8]
