@@ -15,6 +15,9 @@ def extract_message(input_string):
 def main():
     # Create a new mesh node with a specified port
     node = py2p.MeshSocket('0.0.0.0', 5678)
+    
+    node.timeout = 10
+    node.max_connections = 5
 
     # Connect to the bootstrap node if you know its address
     bootstrap_address = input("Enter the bootstrap node's address (IP:Port) or leave empty: ")
