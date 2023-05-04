@@ -62,7 +62,7 @@ def main():
 
     # Reconnection mechanism
     def reconnection_handler():
-       while True:
+       while !(node.routing_table > 0):
            if not node.routing_table:
                print("No connections. Attempting to reconnect...")
                for ip, port in bootstraps:
