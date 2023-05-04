@@ -83,10 +83,10 @@ def main():
         message = input("Enter message to send, 'exit' or 'show': ")
 
         if message == 'exit':
-            node.disconnect(node.id)
+            node.disconnect(node)
             break
         elif message == 'disconnect':
-            node.disconnect(node.id)
+            node.disconnect(node)
             break
         elif message == 'show':
             show_connected_devices(node)
