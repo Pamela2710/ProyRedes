@@ -78,16 +78,15 @@ def main():
     reconnection_thread.daemon = True
     reconnection_thread.start()
 
-    #test
     # Send messages to the other nodes
     while True:
         message = input("Enter message to send, 'exit' or 'show': ")
 
         if message == 'exit':
-            node.disconnect(node)
+            node.disconnect(node.id)
             break
         elif message == 'disconnect':
-            node.disconnect(node)
+            node.disconnect(node.id)
             break
         elif message == 'show':
             show_connected_devices(node)
