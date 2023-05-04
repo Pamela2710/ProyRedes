@@ -4,8 +4,8 @@ import time
 import uuid
 
 def handle_message(msg, sender):
-    clean_msg = msg.packets
-    clean_sender = sender[2:10]
+    clean_msg = (msg.packets)[6:-2]
+    clean_sender = sender[0:10]
     print(f"Received message from {clean_sender}: {clean_msg}")
     
 def sender_to_string(message_obj):
@@ -78,16 +78,15 @@ def main():
     reconnection_thread.daemon = True
     reconnection_thread.start()
 
-    #test
     # Send messages to the other nodes
     while True:
         message = input("Enter message to send, 'exit' or 'show': ")
 
         if message == 'exit':
-            node.disconnect(node)
+            node.disconnect(node.id)
             break
         elif message == 'disconnect':
-            node.disconnect(node)
+            node.disconnect(node.id)
             break
         elif message == 'show':
             show_connected_devices(node)
