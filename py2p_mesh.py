@@ -23,7 +23,12 @@ def main():
     node = py2p.MeshSocket('0.0.0.0', 5678)
     
     node.timeout = 10
-    node.max_connections = 5
+    node.max_connections = 2
+
+    # unique ID
+    node.id = str(uuid.uuid4())[:8]
+
+    print(f"This node's address: {node.out_addr}")
     print(f"This node's ID: {node.id}")
 
     # Connect to the bootstrap node if you know its address
