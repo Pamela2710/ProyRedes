@@ -9,7 +9,7 @@ def handle_message(msg, sender):
     print(f"Received message from {sender}: {clean_msg}")
     
 def sender_to_string(message_obj):
-    return str(message_obj.packets)[:8]
+    return str(message_obj)[:8]
 
 def show_connected_devices(node):
     print("Connected devices:")
