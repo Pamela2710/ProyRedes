@@ -5,8 +5,8 @@ import uuid
 
 def handle_message(msg, sender):
     clean_msg = msg.packets
-    clean_sender = sender_to_string(sender)
-    print(f"Received message from {sender}: {clean_msg}")
+    clean_sender = sender[2:10]
+    print(f"Received message from {clean_sender}: {clean_msg}")
     
 def sender_to_string(message_obj):
     return str(message_obj)[:8]
