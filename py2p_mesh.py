@@ -76,7 +76,6 @@ def main():
 
     while True:
         message = input("Enter message to send, 'exit' or 'show': ")
-
         if message == 'exit':
             for peer in node.routing_table:
                 node.disconnect(peer)
