@@ -3,10 +3,12 @@ import threading
 import time
 import uuid
 
+from py2p.mesh import MeshConnection
+
 
 def handle_message(msg, sender):
-    clean_msg = (msg.packets)[2:-2]
-    clean_sender = sender[2:8]
+    clean_msg = str(msg.packets[1])[2:-1]
+    clean_sender = str(sender[2:8])[2:-1]
     print(f"\n[{clean_sender}]> {clean_msg}")
 
 
@@ -77,12 +79,12 @@ def main():
     while True:
         message = input("Enter message to send, 'exit' or 'show': ")
         if message == 'exit':
-            for peer in node.routing_table:
-                node.disconnect(peer)
+            for value in tuple(node.routing_table.values()):
+                node.disconnect(value)
             break
         elif message == 'disconnect':
-            for peer in node.routing_table:
-                node.disconnect(peer)
+            for value in tuple(node.routing_table.values()):
+                node.disconnect(value)
             break
         elif message == 'show':
             show_connected_devices(node)
