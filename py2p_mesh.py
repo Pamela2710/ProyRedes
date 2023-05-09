@@ -84,7 +84,6 @@ def main():
     # Send messages to the other nodes
     while True:
         message = input("Enter message to send, 'exit' or 'show': ")
-
         if message == 'exit':
             for value in tuple(node.routing_table.values()):
                 node.disconnect(MeshConnection(value))
